@@ -1,0 +1,27 @@
+/* (test_add32.fsl) */
+
+module test_add32 extends Simulator {
+  val a0 = new add32
+  reg count: Bit(12)
+  mem [Bit(65)] pat(4000)
+  initial {
+    _readmemb("test_add32.pat", pat)
+  }
+  always {
+    count := count + 1
+    //
+    if (2 <= count && count <= 4001) par {
+      val i = count - 2
+      val p = pat(i)
+      val a = p(64, 33)
+      val b = p(32, 1)
+      val ci = p(0)
+      a0.add(a, b, ci)
+      val (sum, cout) = (a0.sum, a0.cout)
+      _display("%d %b %b %b %b %b",
+	       i, a, b, ci, sum, cout)
+    }
+    if (count == 4001) _finish("bye")
+  }
+}
+/* End of file (test_add32.fsl) */

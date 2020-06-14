@@ -1,0 +1,10 @@
+
+State Machine - |p32m1|_stage_DUMP_REGS_state_reg
+Name _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st6 _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st1 _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st2 _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st3 _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st4 _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st5 _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st0 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st0 0 0 0 0 0 0 0 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st5 0 0 0 0 0 1 1 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st4 0 0 0 0 1 0 1 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st3 0 0 0 1 0 0 1 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st2 0 0 1 0 0 0 1 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st1 0 1 0 0 0 0 1 
+_stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st6 1 0 0 0 0 0 1 

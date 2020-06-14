@@ -1,0 +1,30 @@
+/* (test_regs32x32.fsl) */
+
+module test_regs32x32 extends Simulator {
+  reg count: Bit(16)
+  val regs = new regs32x32
+  mem [Bit(56)] pat(1000) 
+  initial {
+    _readmemh("test_regs32x32.pat", pat)
+  }
+  always {
+    count := count + 1
+    //if (2 <= count && count <= 4001) par {
+    if (2 <= count && count <= 1001) par {
+      val i = count - 2 //
+      val p = pat(i)    // xx_xx_xx_xxxxxxxx
+      val a = p(52, 48) // read address a (5-btis)
+      val b = p(44, 40) // read address b (5-bits)
+      val c = p(36, 32) // write address (5-btis)
+      val d = p(31, 0)  // write date (32-bits)
+      val a1 = regs.read_a(a).a // read a
+      val b1 = regs.read_b(b).b // read b
+      regs.write(c, d)          // write 
+      _display("%d: %d %d %d %x - %x %x",
+	       i, a, b, c, d, a1, b1)
+    }
+    if (count == 1001) _finish("%d: bye", count)
+  }
+}
+/* End of file (test_regs32x32.fsl) */
+

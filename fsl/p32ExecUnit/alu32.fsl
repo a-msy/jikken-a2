@@ -1,0 +1,52 @@
+/* (alu32.fsl) */
+
+module alu32 {
+  input         a: Bit(32)
+  input         b: Bit(32)
+  output      out: Bit(32)
+  output overflow: Bit(1)
+  output     zero: Bit(1)
+
+  def op_add(a, b): Unit = {
+    val a0 = new add32
+    a0.add(a,b,0.toBit(1))
+    out = a0.out
+    overflow = a0.ov
+    zero = if(a0.out == 0.toBit(32)) 1.toBit(1) else 0.toBit(1)
+  }
+
+  def op_sub(a, b): Unit = {
+    val a0 = new add32
+    a0.add(a,~b,1.toBit(1)) //~b,1.toBit(1)で２の補数をaに足し算しているイメージ
+    out = a0.out
+    overflow = a0.ov
+    zero = if(a0.out == 0.toBit(32)) 1.toBit(1) else 0.toBit(1)
+  }
+
+  def op_and(a, b): Unit = {
+    out = a & b
+    overflow = 0.toBit(1)
+    zero = if (out == 0.toBit(32)) 1.toBit(1) else 0.toBit(1)
+  }
+
+  def op_or(a, b): Unit = {
+    out = a | b
+    overflow = 0.toBit(1)
+    zero = if (out == 0.toBit(32)) 1.toBit(1) else 0.toBit(1)
+  }
+
+  def op_xor(a, b): Unit = {
+    out = a ^ b
+    overflow = 0.toBit(1)
+    zero = if (out == 0.toBit(32)) 1.toBit(1) else 0.toBit(1)
+  }
+
+  def op_nor(a, b): Unit = {
+    out = ~(a | b)
+    overflow = 0.toBit(1)
+    zero = if (out == 0.toBit(32)) 1.toBit(1) else 0.toBit(1)
+  }
+
+} // module alu32
+
+/* End of file (alu32.fsl) */

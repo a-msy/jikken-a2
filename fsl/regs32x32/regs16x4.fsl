@@ -1,0 +1,68 @@
+module regs16x4 {
+  input      in: Bit(16)
+  input in_addr: Bit(2)
+  input  a_addr: Bit(2)
+  input  b_addr: Bit(2)
+  output      a: Bit(16)
+  output      b: Bit(16)
+	
+  reg reg0: Bit(16)
+  reg reg1: Bit(16)
+  reg reg2: Bit(16)
+  reg reg3: Bit(16)
+	
+  def read_a(a_addr): Unit = {
+    val v = a_addr match {
+      case 0b00 => reg0
+      case 0b01 => reg1
+      case 0b10 => reg2
+      case 0b11 => reg3
+    }
+    a = v
+  }
+  def read_b(b_addr): Unit = {
+    val v = b_addr match {
+      case 0b00 => reg0
+      case 0b01 => reg1
+      case 0b10 => reg2
+      case 0b11 => reg3
+    }
+    b = v
+  }
+  def write(in_addr, in): Unit = {
+    in_addr match {
+      case 0b00 => reg0 := in
+      case 0b01 => reg1 := in
+      case 0b10 => reg2 := in
+      case 0b11 => reg3 := in
+    }
+  }
+	
+  def clear(): Unit = {
+    reg0 := 0x0000
+    reg1 := 0x0000
+    reg2 := 0x0000
+    reg3 := 0x0000
+  }
+	}
+	
+	module test_regs16x4 extends Simulator {
+  reg count: Bit(8)
+  val regs = new regs16x4
+  always {
+    count := count + 1
+    if (count == 99) _finish("%d: bye", count)
+    if (count == 10) regs.write(0b00, 0x1234)
+    if (count == 11) regs.write(0b01, 0x1111)
+    if (count == 12) regs.write(0b10, 0x2222)
+    if (count == 13) regs.write(0b11, 0x3210)
+    if (count == 15) 
+      _display("%d: %d %x, %d %x", count, 
+	       0b00, regs.read_a(0b00).a, 
+	       0b01, regs.read_b(0b01).b)
+    if (count == 20) 
+      _display("%d: %d %x, %d %x", count, 
+	       0b10, regs.read_a(0b10).a, 
+	       0b11, regs.read_b(0b11).b)
+  }
+	}

@@ -1,0 +1,68 @@
+/* (regs32x32.fsl) */
+
+module regs32x32 {
+  input      in: Bit(32)  //レジスタに書き込む値
+  input in_addr: Bit(5)   //書き込みアドレス 
+  input  a_addr: Bit(5)   //レジスタを指定するのに必要なのは３本
+  input  b_addr: Bit(5)   //読み出しアドレス2（ポートbのアドレス）
+  output      a: Bit(32)  //読み出した値の出力（ポートaのデータ）
+  output      b: Bit(32)  //読み出した値の出力（ホーとbのデータ）
+
+  val reg0 = new regs32x8
+  val reg1 = new regs32x8
+  val reg2 = new regs32x8
+  val reg3 = new regs32x8
+
+  // 頭の２ビットが使うユニット
+  // 下３ビットが使う線
+
+  def read_a(a_addr): Unit = {
+    // a_addr で指定されたレジスタの値をポートa に出力．a_addr が 0 の場合は，ポート a に 0 を出力
+    val addr = a_addr(1,0)
+    if(a_addr == 0.toBit(5)) a = 0.toBit(32) //a_addrが0のときは0
+    else{
+      addr match{
+        case 0b00 =>a = reg0.read_a(a_addr(4,2)).a
+        case 0b01 =>a = reg1.read_a(a_addr(4,2)).a
+        case 0b10 =>a = reg2.read_a(a_addr(4,2)).a
+        case 0b11 =>a = reg3.read_a(a_addr(4,2)).a
+      }
+    }
+  }
+
+  def read_b(b_addr): Unit = {
+    // b_addr で指定されたレジスタの値をポートb に出力．b_addr が 0 の場合は，ポート b に 0 を出力
+    val addr = b_addr(1,0)
+    if(b_addr == 0.toBit(5)) b = 0.toBit(32) //b_addrが0のときは0
+    else{
+      addr match{
+        case 0b00 =>b = reg0.read_b(b_addr(4,2)).b
+        case 0b01 =>b = reg1.read_b(b_addr(4,2)).b
+        case 0b10 =>b = reg2.read_b(b_addr(4,2)).b
+        case 0b11 =>b = reg3.read_b(b_addr(4,2)).b
+      }
+    }
+  }
+
+  def write(in_addr, in): Unit = {
+    // in_addr で指定されたレジスタへ in を書き込む．in_addr が 0 の場合は書き込まない．
+    val addr = in_addr(1,0)
+    addr match {
+      case 0b00 => reg0.write(in_addr(4,2),in)
+      case 0b01 => reg1.write(in_addr(4,2),in)
+      case 0b10 => reg2.write(in_addr(4,2),in)
+      case 0b11 => reg3.write(in_addr(4,2),in)
+    }
+  }
+
+  def clear(): Unit = {
+    // すべてのレジスタを0クリアする
+    reg0.clear()
+    reg1.clear()
+    reg2.clear()
+    reg3.clear()
+  }
+}
+
+/* End of file (regs32x32.fsl) */
+

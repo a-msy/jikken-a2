@@ -1,0 +1,53 @@
+/*
+ * Data forwarding unit for p32p1 processor
+ * (p32ForwardingUnit.fsl)
+ *
+ */
+
+module p32ForwardingUnit {
+  input   addr1: Bit(5) //アドレス入力1
+  input     in1: Bit(32)//データ入力1
+  input   addr2: Bit(5)//アドレス入力2
+  input     in2: Bit(32)//データ入力2
+
+  input ex_addr: Bit(5)//EXステージからのアドレス入力
+  input ex_data: Bit(32)//EXステージからのデータ入力
+  input me_addr: Bit(5)//MEMステージからのアドレス入力
+  input me_data: Bit(32)//MEMステージからのデータ入力
+  input wb_addr: Bit(5)//WBステージからのアドレス入力
+  input wb_data: Bit(32)//WBステージからのデータ入力
+
+  output def load_hazard(): Unit//ロードハザードを検出した際に起動される
+
+  def ex(ex_addr, ex_data): Unit = {}//EXステージにおける書き込みレジスタ番号と書き込む値をセットする
+  def me(me_addr, me_data): Unit = {}//MEMステージにおける書き込みレジスタ番号と書き込む値をセットする
+  def wb(wb_addr, wb_data): Unit = {}//WBステージにおける書き込みレジスタ番号と書き込む値をセットする
+  def ex_load(): Unit = {}//EXステージで処理中の命令がロード命令のときに呼び出す
+
+  private inline def forwarding(addr: Bit(5), in: Bit(32)): Bit(32) = {
+    val fromEX  = (ex.isRunning && (ex_addr == addr))
+    val fromMEM = (me.isRunning && (me_addr == addr))
+    val fromWB  = (wb.isRunning && (wb_addr == addr))
+
+    if (fromEX && ex_load.isRunning) load_hazard()
+
+    if (addr == 0b00000) Bit(32).zero // no forwarding
+    else if (fromEX)     ex_data // forwarding from EX
+    else if (fromMEM)    me_data // forwarding from MEM
+    else if (fromWB)     wb_data // forwarding from WB
+    else in                // no data forwarding
+  }
+
+  def set1(addr1, in1): Bit(32) = {
+    //レジスタファイル（ポートa）からリードしたデータとアドレス（レジスタ番号）をセットする．返値はセットした値，またはフォワーディングされた値
+    forwarding(addr1, in1)
+  }
+
+  def set2(addr2, in2): Bit(32) = {
+    //レジスタファイル（ポートb）からリードしたデータとアドレス（レジスタ番号）をセットする．返値はセットした値，またはフォワーディングされた値
+    forwarding(addr2, in2)
+  }
+
+} // module p32ForwardingUnit
+
+/* End of file (p32ForwardingUnit.fsl) */

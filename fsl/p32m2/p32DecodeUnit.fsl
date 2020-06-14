@@ -1,0 +1,180 @@
+/* (p32DecodeUnit.fsl) */
+/*
+*デコードユニットは，p32プロセッサの命令デコードサイクルで起動されるユニット．
+*命令コードのrsフィールド（5ビット）とrtフィールド（5ビット）のアドレス（レジスタ番号）を使って
+*レジスタファイルからレジスタの値を取り出し，それら２つの値と，命令コード，プログラムカウンタの値を
+*引数に起動される．
+
+p16Decodeを参考にした
+
+http://www.arc.cs.okayama-u.ac.jp/~nobuya/jikken/filesjikken2012-03_ISA_1.pdf
+*/
+module p32DecodeUnit extends p32Opcode with p32ExceptionCauseCode {
+  input       inst: Bit(32)//命令入力
+  input     a_data: Bit(32)//入力データ a （レジスタファイルの出力a，命令の rs フィールドで指定されるレジスタの値）
+  input     b_data: Bit(32)//入力データ b（レジスタファイルの出力b，命令のrtフィールドで指定されるレジスタの値）
+  input         pc: Bit(32)//プログラムカウンタ入力
+  output     a_out: Bit(32)//出力 a
+  output     b_out: Bit(32)//出力 b
+  output  dest_out: Bit(5)//書き込みレジスタ番号
+  output shamt_out: Bit(5)//シフト量
+  output   mdr_out: Bit(32)//メモリデータレジスタ出力（MDR - memory data register）
+  output    pc_out: Bit(32)//プログラムカウンタ出力
+  output   epc_out: Bit(32)//例外プログラムカウンタ出力
+  output cause_out: Bit(4)//原因コード出力
+  output funct_out: Bit(6)//機能コード出力
+
+  output def update_pc(pc_out) //プログラムカウンタの更新値を出力する
+  output def update_mdr(mdr_out) //メモリデータレジスタの更新値を出力する
+  output def set_epc(epc_out) //例外プログラムカウンタの更新値を出力する
+  output def set_cause(cause_out) //例外の原因コードを出力する
+  output def exception() //例外が発生した際に起動される
+  output def undefined_inst() //未定義命令の場合に起動される
+
+  val pc_add = new add32 //分岐先のアドレス計算に用いる加算器のインスタンス化
+
+  val EXCEPTION_HANDLER: Bit(32) = 0x8000_0080 //例外発生時のジャンプ先アドレス
+
+  def decode(inst, a_data, b_data, pc): Unit = par {//命令をデコードする
+    val opcode    = inst(31, 26)
+    val rt        = inst(20, 16)
+    val rd        = inst(15, 11)
+    val immediate = inst(15, 0)
+    val funct     = inst(5, 0)
+	val target    = inst(25,0)//追記
+    val isSPECIAL = (opcode == SPECIAL)
+    val isADDI    = (opcode == ADDI)
+    val isADDIU   = (opcode == ADDIU)
+    val isANDI    = (opcode == ANDI)
+    val isORI     = (opcode == ORI)
+    val isXORI    = (opcode == XORI)
+    val isLUI     = (opcode == LUI)
+    val isSLTI    = (opcode == SLTI)
+    val isSLTIU   = (opcode == SLTIU)
+    val isBEQ     = (opcode == BEQ)
+    val isBNE     = (opcode == BNE)
+    val isSB      = (opcode == SB)
+    val isSW      = (opcode == SW)
+    val isLB      = (opcode == LB)
+    val isLW      = (opcode == LW)
+    val isSHIFT_I = (isSPECIAL && ((funct == SLL) || (funct == SRL) || (funct == SRA)))
+    val isSHIFT_V = (isSPECIAL && ((funct == SLLV) || (funct == SRLV) || (funct == SRAV)))
+    val isSHIFT   = (isSHIFT_I || isSHIFT_V)
+    val isBR      = (isBEQ || isBNE)
+    val isLOAD    = (isLB || isLW)
+    val isSTORE   = (isSB || isSW)
+    // immediate value is sign extended 即値を符号拡張する命令か？
+    val immSignExt   = (isADDI || isADDIU || isSLTI || isSLTIU)
+    // immediate value is zero extended 即値をゼロでビット拡張する命令か？
+    val immZeroExt   = (isANDI || isORI || isXORI) 
+
+    any {
+      isSPECIAL: par {//並列実行par
+		funct_out = funct
+		// shift operations 
+		shamt_out = if (isSHIFT_V) a_data(4,0) 		// sllv, srlv, srav shamt_outは5bit
+		    		else if (isSHIFT_I) inst(10,6) 	// sll, srl, sra
+		    		else 0b00000
+		any {
+	  			(funct == JR): par {
+	    			dest_out = 0b00000 		//帰ってくることがないので０埋め
+	    			a_out    = a_data
+	    			b_out    = 0x00000000 	//値が狂うから出しちゃだめ
+	    			update_pc(a_data) 		// rs //プログラムカウンタの更新値を出力する
+	  			} // funct == JR
+	  			(funct == JALR): par {
+	    			dest_out = rd 			// rd
+	    			a_out    = 0x00000000
+	    			b_out    = pc 			// 返り先のアドレス
+	    			update_pc(a_data) 		// rs //プログラムカウンタの更新値を出力する
+	  			} // funct == JALR
+	  			(funct == SYSCALL): par {
+	    			dest_out = 0b00000
+	    			a_out    = 0x00000000
+	    			b_out    = 0x00000000
+	    			update_pc(EXCEPTION_HANDLER) //プログラムカウンタの更新値を出力する
+	    			set_epc(pc - 4)          		 // set epc register to current pc
+	    			set_cause(CAUSE_SYS) 		 // set cause register
+	    			exception()
+	  		} // funct == SYSCALL
+	  		else: par {
+	    		dest_out = rd   // rd
+	    		a_out = a_data
+	    		b_out = b_data
+	  		}
+		}
+      } // isSPECIAL
+    else: par {
+		funct_out = 0b000000
+		shamt_out = 0b00000
+		any {
+	  		isLOAD: par {
+	    		dest_out = rt 				// rt
+	    		a_out    = a_data
+	    		b_out    = 32 # immediate  	// immediate
+	  		} // isLOAD
+	  		isSTORE: par {
+	    		dest_out = 0b00000
+	    		update_mdr(b_data)			// data to store メモリデータレジスタの更新値を出力する
+	    		a_out    = a_data
+	    		b_out    = 32 # immediate   // immediate 
+	  		} // isSTORE
+	  		immSignExt: par { // immediate value must be sign extended
+	    		dest_out = rt   			// rt
+	    		a_out    = a_data
+	    		b_out    = 32 # immediate   // immediate
+	  		} // ID_I_SE (sign extend)
+	  		immZeroExt: par { // immediate value must be zero extended
+	    		dest_out = rt      			// rt
+	    		a_out    = a_data
+	    		b_out    = 0x0000 ++ immediate 	// immediate 汎用レジスタrsの内容と16ビット即値immediateを32ビットにゼロ拡張
+	  		} // D_I_ZE (zero extend)
+	  		isLUI: par { // load upper immediate
+	    		dest_out = rt  					// rt
+	    		a_out    = 0x00000000
+	    		b_out    = 0x0000 ++ immediate 	// immediate 左詰め
+	  		} // isLUI
+	  		isBR: par { // branch (BEQ/BNE)
+	    		dest_out = 0b00000
+	    		a_out    = a_data
+	    		b_out    = 32 # immediate   	// sign extended immediate value
+	    	any { 
+	      		((isBEQ && (a_data == b_data)) ||(isBNE && (a_data != b_data))):par {
+		 			val next_pc = pc_add.add(pc, 32 # (immediate ++ 0b00),0b0).sum
+		 			//immediateの最上位ビット(MSB)をコピー（符号拡張 - 符号を保ったままビット幅を増やす）
+		 			//2ビット0を追加（4倍）
+		 			//この値とPCを加算して，分岐先アドレスを求める
+		 			update_pc(next_pc)
+	       			}
+	    		}
+	  		} // ID_BR
+	  		(opcode == J): par { // jump
+	    		dest_out = 0b00000
+	    		a_out    = a_data
+	    		b_out    = 0x00000000
+	    		update_pc( pc(31,28) ++ target ++ 0b00) // branch target addr.
+				//上位4ビットはPCから
+				//2ビット0を追加（4倍）targetと合わせる
+	  		}
+	  		(opcode == JAL): par { // jump and link
+	    		dest_out = 0b11111	// $ra ($31)
+	    		a_out    = 0x00000000
+	    		b_out    = pc
+	    		update_pc( pc(31,28) ++ target ++ 0b00) // jump target addr.
+	  		}
+        	else: par { // undefined instructions
+	    		dest_out = 0b00000
+	    		a_out    = 0xffffffff
+	    		b_out    = 0xffffffff
+	    		update_pc(EXCEPTION_HANDLER)
+	    		set_epc(pc - 4)
+	    		set_cause(CAUSE_RI) // reserved instruction exception
+	    		undefined_inst()
+	  		}
+		}
+      }
+    } // any
+  } // def decode(inst, a_data, b_data, pc): Unit
+} // module p32DecodeUnit extends p32Opcode with p32ExceptionCauseCode
+
+/* End of file (p32DecodeUnit.fsl) */

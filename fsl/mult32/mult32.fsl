@@ -1,0 +1,51 @@
+/* (mult32.fsl) */
+//https://scrapbox.io/jikken-a/%E3%80%90%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%AA%B2%E9%A1%8C3%E3%80%91
+
+module mult32 {
+  input    a: Bit(32)
+  input    b: Bit(32)
+  output out: Bit(64)
+
+  output def en(out): Unit
+
+  def mult(a, b): Unit = {
+    //val result = a*b
+    //en(result(63,0))
+    
+    // 組み合わせ回路で実現
+     en(((if(b(0,0) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 32) + 
+       ((if(b(1,1) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 31) + 
+       ((if(b(2,2) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 30) + 
+       ((if(b(3,3) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 29) +
+       ((if(b(4,4) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 28) + 
+       ((if(b(5,5) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 27) + 
+       ((if(b(6,6) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 26) + 
+       ((if(b(7,7) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 25) +
+       ((if(b(8,8) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 24) + 
+       ((if(b(9,9) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 23) + 
+       ((if(b(10,10) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>22) + 
+       ((if(b(11,11) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>21) +
+       ((if(b(12,12) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>20) + 
+       ((if(b(13,13) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>19) + 
+       ((if(b(14,14) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>18) + 
+       ((if(b(15,15) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>17) +
+       ((if(b(16,16) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 16) + 
+       ((if(b(17,17) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 15) + 
+       ((if(b(18,18) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 14) + 
+       ((if(b(19,19) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 13) +
+       ((if(b(20,20) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 12) + 
+       ((if(b(21,21) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 11) + 
+       ((if(b(22,22) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>> 10) + 
+       ((if(b(23,23) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>9) +
+       ((if(b(24,24) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>8) + 
+       ((if(b(25,25) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>7) + 
+       ((if(b(26,26) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>6) + 
+       ((if(b(27,27) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>5) +
+       ((if(b(28,28) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>4) + 
+       ((if(b(29,29) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>3) + 
+       ((if(b(30,30) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>2) + 
+       ((if(b(31,31) == 0b1) a ++ Bit(32).zero else Bit(64).zero) >>>1))
+  }
+} // module mult32
+
+/* End of file (mult32.fsl) */

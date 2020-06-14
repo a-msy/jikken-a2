@@ -1,0 +1,26 @@
+/* (shift32.fsl) */
+
+module shift32 {
+  input    in: Bit(32)
+  input shamt: Bit(5)
+  output  out: Bit(32)
+
+  // shift left logical
+  def sll(in, shamt): Unit = {
+    // ...
+  }
+  
+  // shift right logical
+  def srl(in, shamt): Unit = {
+    // ...
+  }
+
+  // shift right arithmetic
+  def sra(in, shamt): Unit = {
+    // ...
+  }
+} // module shift32
+
+/* End of file (shift32.fsl) */
+
+

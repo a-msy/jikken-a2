@@ -1,0 +1,45 @@
+/* (test_p32ForwardingUnit.fsl) */
+
+module test_p32ForwardingUnit extends Simulator {
+  reg count: Bit(16)
+  val fu = new p32ForwardingUnit
+  mem [Bit(108)] pat(1000)
+  initial {
+    _readmemh("test_p32ForwardingUnit.pat", pat)
+  }
+  always {
+    count := count + 1
+    if (2 <= count && count <= 1001) par {
+      val i = count - 2 //
+      val p = pat(i)       // xx_xxxxxxxx_xx_xxxxxxxx_xx_xx_xx_x
+      val   addr1 = p(104, 100) // 5-bits
+      val     in1 = p(99, 68) // 32-bits
+      val   addr2 = p(64, 60) // 5-bits
+      val     in2 = p(59, 28) // 32-bits
+      val ex_addr = p(24, 20) // 5-bits
+      val me_addr = p(16, 12) // 5-bits
+      val wb_addr = p(8, 4) // 5-bits
+      val ex_load = p(0) // 1-bit
+
+      val ex_data = 0x1111 ++ count
+      val me_data = 0x2222 ++ count
+      val wb_data = 0x3333 ++ count
+      
+      val o1 = fu.set1(addr1, in1)
+      val o2 = fu.set2(addr2, in2)
+      fu.ex(ex_addr, ex_data)
+      fu.me(me_addr, me_data)
+      fu.wb(wb_addr, wb_data)
+      if (ex_load == 0b1) fu.ex_load()
+      val load_hazard1 = if (fu.load_hazard.isRunning) 0b1 else 0b0
+	    
+      _display("%d: %d %x %d %x %d %x %d %x %d %x %d - %x %x %x",
+	       i, addr1, in1, addr2, in2, 
+	       ex_addr, ex_data, me_addr, me_data, wb_addr, wb_data,
+	       ex_load, o1, o2, load_hazard1)
+    }
+    if (count == 1001) _finish("%d: bye", count)
+  }
+}
+/* End of file (test_p32ForwardingUnit.fsl) */
+

@@ -1,0 +1,205 @@
+module test_p32p1 extends Simulator with p32Opcode with p32ExceptionCauseCode {
+  val IMEM_LATENCY: Bit(8) = 0 // instruction memory access latency
+  val DMEM_LATENCY: Bit(8) = 0 // data memory access latency
+
+  reg count: Bit(32)
+  reg inst_count: Bit(32)
+  reg load_count: Bit(32)
+  reg store_count: Bit(32)
+
+  val cpu = new p32p1
+
+  // instruction memory (text segment)
+  mem[Bit(8)] im0(16384) // bank 0
+  mem[Bit(8)] im1(16384) // bank 1
+  mem[Bit(8)] im2(16384) // bank 2 
+  mem[Bit(8)] im3(16384) // bank 3 
+  // data memory (for data segment)
+  mem[Bit(8)] dm0(16384) // bank 0
+  mem[Bit(8)] dm1(16384) // bank 1
+  mem[Bit(8)] dm2(16384) // bank 2
+  mem[Bit(8)] dm3(16384) // bank 3
+  // data memory (for stack segment)
+  mem[Bit(8)] sm0(16384) // bank 0
+  mem[Bit(8)] sm1(16384) // bank 1
+  mem[Bit(8)] sm2(16384) // bank 2
+  mem[Bit(8)] sm3(16384) // bank 3
+
+  private def load_mem(): Unit = {
+    _readmemh("text.0.mem", im0)
+    _readmemh("text.1.mem", im1)
+    _readmemh("text.2.mem", im2)
+    _readmemh("text.3.mem", im3)
+    _readmemh("data.0.mem", dm0)
+    _readmemh("data.1.mem", dm1)
+    _readmemh("data.2.mem", dm2)
+    _readmemh("data.3.mem", dm3)
+  }
+
+  always {
+    count := count + 1
+    if (count == 1) {
+      _display("%d: load...", count)
+      load_mem()
+    }
+    if (count == 10) {
+      inst_count  := 0
+      load_count  := 0
+      store_count := 0
+      _display("%d: cpu start", count)
+      cpu.start()
+    }
+    if (count ==250000) par {
+      report_statistics()
+      _finish("%d: count limit", count)
+    }
+  } // always
+
+  private def cpu.i_read(addr: Bit(32)): Unit = {
+    val (hi, lo) = (addr(31, 16), addr(15, 2))
+    val inst = im0(lo) ++ im1(lo) ++ im2(lo) ++ im3(lo)
+    //_display("%d: i_read: %x: %x", count, addr, inst)
+    if (hi == 0x0000) {
+      if (IMEM_LATENCY == 0) inst_enable(addr)
+      else {
+	val latency = IMEM_LATENCY
+	_display("%d: i_read: %x: (read_req)", count, addr)
+	generate IMEM(addr, latency)
+      }
+    } else inst_bus_error(addr)
+  } // private def cpu.i_read(addr: Bit(32)): Unit
+  stage IMEM(addr: Bit(32), latency: Bit(8)) {
+    par {
+      if (latency == 1) par {
+	inst_enable(addr)
+	finish
+      } else par {
+	latency := latency - 1
+      }
+    }
+  } // stage IMEM(addr: Bit(32), latency: Bit(8))
+  private def inst_enable(addr: Bit(32)): Unit = {
+    val (hi, lo) = (addr(31, 16), addr(15, 2))
+    val inst = im0(lo) ++ im1(lo) ++ im2(lo) ++ im3(lo)
+    _display("%d: i_read: %x: %x", count, addr, inst)
+    inst_count := inst_count + 1
+    cpu.inst_en(inst)
+  } //   private def inst_enable(addr: Bit(32)): Unit
+
+  private def cpu.d_read(addr: Bit(32)): Unit = {
+    val (hi, lo) = (addr(31, 16), addr(15, 2))
+    hi match {
+      case 0x1000 | 0x7fff => par { // data/stack segment
+	if (DMEM_LATENCY == 0) data_enable(addr)
+	else {
+	  val latency = DMEM_LATENCY
+	  _display("%d: _ d_read: %x:       (read_req)", count, addr)
+	  generate DMEM(addr, latency)
+	}
+      }
+      case _ => par {
+	_display("%d: X d_read: %x:      (bus error)", count, addr)
+	data_bus_error(addr)
+      }
+    }
+  } // private def cpu.d_read(addr: Bit(32)): Unit
+  stage DMEM(addr: Bit(32), latency: Bit(8)) {
+    par {
+      if (latency == 1) par {
+	data_enable(addr)
+	finish
+      } else par {
+	latency := latency - 1
+      }
+    }
+  } // stage DMEM(addr: Bit(32), latency: Bit(8))
+  private def data_enable(addr: Bit(32)): Unit = {
+    val (hi, lo) = (addr(31, 16), addr(15, 2))
+    hi match {
+      case 0x1000 => par { // data segment
+	val dm_data = dm0(lo) ++ dm1(lo) ++ dm2(lo) ++ dm3(lo)
+	cpu.data_en(dm_data)
+	load_count := load_count + 1
+	_display("%d: S d_read: %x:       %x", count, addr, dm_data)
+      }
+      case 0x7fff => par { // stack segment
+	val sm_data = sm0(lo) ++ sm1(lo) ++ sm2(lo) ++ sm3(lo)
+	cpu.data_en(sm_data)
+	load_count := load_count + 1
+	_display("%d: S d_read: %x:       %x", count, addr, sm_data)
+      }
+      case _ => par {
+	_display("%d: X d_read: %x:      (bus error)", count, addr)
+	data_bus_error(addr)
+      }
+    }
+  } // private def data_enable(addr: Bit(32)): Unit
+  private def cpu.d_write(addr: Bit(32), loc: Bit(4), data: Bit(32)): Unit = {
+    val (hi, lo) = (addr(31, 16), addr(15, 2))
+    hi match {
+      case 0x1000 => par { // data segment
+	_display("%d: D d_write: %x: %b %x", count, addr, loc, data)
+	store_count := store_count + 1
+	any {
+	  (loc(3) == 0b1): dm0(lo) := data(31, 24)
+	  (loc(2) == 0b1): dm1(lo) := data(23, 16)
+	  (loc(1) == 0b1): dm2(lo) := data(15, 8)
+	  (loc(0) == 0b1): dm3(lo) := data(7, 0)
+	}
+	cpu.write_done()
+      }
+      case 0x7fff => par { // stack segment
+	_display("%d: S d_write: %x: %b %x", count, addr, loc, data)
+	store_count := store_count + 1
+	any {
+	  (loc(3) == 0b1): sm0(lo) := data(31, 24)
+	  (loc(2) == 0b1): sm1(lo) := data(23, 16)
+	  (loc(1) == 0b1): sm2(lo) := data(15, 8)
+	  (loc(0) == 0b1): sm3(lo) := data(7, 0)
+	}
+	cpu.write_done()
+      }
+      case _ => par {
+	_display("%d: d_write: addr: %x loc: %b data: %x (bus error)", count, addr, loc, data)
+	data_bus_error(addr)
+      }
+    }
+  } // private def cpu.d_write(addr: Bit(32), loc: Bit(4), data: Bit(32)): Unit
+
+  private def inst_bus_error(addr: Bit(32)): Unit = {
+    //dump_regs()
+    _display("%d: inst bus error: addr: %x", count, addr)
+  }
+  private def data_bus_error(addr: Bit(32)): Unit = {
+    //dump_regs()
+    _display("%d: data bus error: addr: %x", count, addr)
+  }
+  private def cpu.halt(): Unit = {
+    dump_regs()
+    _display("%d: cpu halted", count)
+  }
+  private def report_statistics(): Unit = {
+    _display("inst_count:  %d\nload_count:  %d\nstore_count: %d", 
+	     inst_count, load_count, store_count)
+  }
+  private def dump_regs(): Unit = {
+    cpu.dump_regs()
+    generate WAIT_DUMP_REGS()
+  }
+  stage WAIT_DUMP_REGS() {
+    state st0 par {
+      if (cpu.dump_regs_done.isRunning) {
+	report_statistics()
+	goto st1
+      }
+    }
+    state st1 par {
+      _finish("%d: bye", count)
+      goto st0
+      finish
+    }
+  } // stage WAIT_DUMP_REGS()
+    
+} // module test_p32p1
+
+/* End of file (test_p32p1.fsl) */

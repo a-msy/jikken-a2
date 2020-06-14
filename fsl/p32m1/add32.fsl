@@ -1,0 +1,122 @@
+module add4 {
+   input    a: Bit(4)
+   input    b: Bit(4) 
+   input   ci: Bit(1) // carry-in
+   output out: Bit(4) // sum output
+   output  co: Bit(1) // carry-out
+ 
+   val a0 = new add2
+   val a1 = new add2
+  
+   def add(a, b, ci): Unit = {
+      a0.add(a(1, 0), b(1, 0), ci)    // インスタンス a0 の関数 add を起動
+   	a1.add(a(3, 2), b(3, 2), a0.co) // インスタンス a1 の関数 add を起動
+      val t0 = a0.out                 // a0の出力outの取り出し
+      val (t1, c1) = (a1.out, a1.co) // a1の出力の取り出し
+      out = t1 ++ t0                // t1 と t0 を連結 (4ビット幅を2個連結して8ビット）
+      co = c1                       // 出力 co は，a1の出力co
+   } // def add
+ } // module add4
+ 
+module add2 {
+   input    a: Bit(2)
+   input    b: Bit(2) 
+   input   ci: Bit(1) // carry-in
+   output out: Bit(2) // sum output
+   output  co: Bit(1) // carry-out
+ 
+   val a0 = new fullAdder
+   val a1 = new fullAdder
+ 
+   def add(a, b, ci): Unit = {
+      a0.add(a(0), b(0), ci)
+      a1.add(a(1), b(1), a0.co)
+      val t0 = a0.out                 // a0の出力outの取り出し
+      val (t1, c1) = (a1.out, a1.co) // a1の出力の取り出し
+      out = t1 ++ t0                // t1 と t0 を連結 (4ビット幅を2個連結して8ビット）
+      co = c1                       // 出力 co は，a1の出力co
+   } // def add
+} // module add2
+ 
+module fullAdder {
+   input    a: Bit(1)
+   input    b: Bit(1) 
+   input   ci: Bit(1) 
+   output out: Bit(1) 
+   output  co: Bit(1) 
+ 
+   def add(a,b,ci): Unit = {
+      co = (a & b) | (a & ci) | (b & ci)
+      out = a ^ b ^ ci
+   } // def add
+} // module fullAdder
+ 
+ module add8 {
+   input    a: Bit(8)
+   input    b: Bit(8)
+   input   ci: Bit(1)
+   output out: Bit(8)
+   output  co: Bit(1)
+   output  ov: Bit(1)
+  
+   val a0 = new add4
+   val a1 = new add4
+  
+   def add(a, b, ci): Unit = {
+   	a0.add(a(3, 0), b(3, 0), ci)    // インスタンス a0 の関数 add を起動
+   	a1.add(a(7, 4), b(7, 4), a0.co) // インスタンス a1 の関数 add を起動
+     val t0 = a0.out                // a0の出力outの取り出し
+     val (t1, c1) = (a1.out, a1.co) // a1の出力の取り出し
+     out = t1 ++ t0                 // t1 と t0 を連結 (4ビット幅を2個連結して8ビット）
+     co = c1                        // 出力 co は，a1の出力co
+     ov = (~a.msb & ~b.msb & t1.msb) | (a.msb & b.msb & ~t1.msb) // オーバフローの計算
+   }
+ } // module add8
+ 
+  module add16 {
+   input    a: Bit(16)
+   input    b: Bit(16)
+   input   ci: Bit(1)
+   output out: Bit(16)
+   output  co: Bit(1)
+   output  ov: Bit(1)
+  
+   val a0 = new add8
+   val a1 = new add8
+  
+   def add(a, b, ci): Unit = {
+   	a0.add(a(7, 0), b(7, 0), ci)    // インスタンス a0 の関数 add を起動
+   	a1.add(a(15, 8), b(15, 8), a0.co) // インスタンス a1 の関数 add を起動
+     val t0 = a0.out                // a0の出力outの取り出し
+     val (t1, c1) = (a1.out, a1.co) // a1の出力の取り出し
+     out = t1 ++ t0                 // t1 と t0 を連結 (8ビット幅を2個連結して16ビット）
+     co = c1                        // 出力 co は，a1の出力co
+     ov = (~a.msb & ~b.msb & t1.msb) | (a.msb & b.msb & ~t1.msb) // オーバフローの計算
+   }
+ } // module add8
+ 
+/* (add32.fsl) */
+ 
+module add32 {
+   input     a: Bit(32)
+   input     b: Bit(32)
+   input   cin: Bit(1)
+   output  sum: Bit(32)
+   output cout: Bit(1)
+   output   ov: Bit(1)
+ 
+   val a0 = new add16
+   val a1 = new add16
+ 
+   def add(a, b, cin): Unit = {
+   	a0.add(a(15, 0), b(15, 0), cin)    // インスタンス a0 の関数 add を起動
+   	a1.add(a(31, 16), b(31, 16), a0.co) // インスタンス a1 の関数 add を起動
+     val t0 = a0.out               // a0の出力sumの取り出し
+     val (t1, c1) = (a1.out, a1.co) // a1の出力の取り出し
+     sum = t1 ++ t0                 // t1 と t0 を連結 (8ビット幅を2個連結して16ビット）
+     cout = c1                        // 出力 cout は，a1の出力co
+     ov = (~a.msb & ~b.msb & t1.msb) | (a.msb & b.msb & ~t1.msb) // オーバフローの計算
+   }
+} // module add32
+ 
+/* End of file (add32.fsl) */

@@ -1,0 +1,11 @@
+run
+print 0xc000
+print 0xc004
+e
+-e
+exi
+exit
+run
+print 0x10004000
+print 0x10004004
+exit

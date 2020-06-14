@@ -1,0 +1,42 @@
+【p32m2における各命令の実行サイクル数】
+								2008.07.01
+---------------------------------------------
+命令		サイクル数	ステージ
+---------------------------------------------
+add   		4		IF/ID/EX/WB
+addi  		4		IF/ID/EX/WB
+addu  		4		IF/ID/EX/WB
+addiu 		4		IF/ID/EX/WB
+sub   		4		IF/ID/EX/WB
+subu  		4		IF/ID/EX/WB
+and   		4		IF/ID/EX/WB
+andi  		4		IF/ID/EX/WB
+or    		4		IF/ID/EX/WB
+ori   		4		IF/ID/EX/WB
+xor   		4		IF/ID/EX/WB
+xori  		4		IF/ID/EX/WB
+nor   		4		IF/ID/EX/WB
+sll   		4		IF/ID/EX/WB
+srl   		4		IF/ID/EX/WB
+sra   		4		IF/ID/EX/WB
+sllv  		4		IF/ID/EX/WB
+srlv  		4		IF/ID/EX/WB
+srav  		4		IF/ID/EX/WB
+beq   		2		IF/ID
+bne   		2		IF/ID
+slt   		4		IF/ID/EX/WB
+slti  		4		IF/ID/EX/WB
+sltu  		4		IF/ID/EX/WB
+sltiu 		4		IF/ID/EX/WB
+lui   		4		IF/ID/EX/WB
+lw    		5		IF/ID/EX/MEM/WB
+lb    		5		IF/ID/EX/MEM/WB
+sw    		4		IF/ID/EX/MEM
+sb    		4		IF/ID/EX/MEM
+j     		2		IF/ID
+jal   		4		IF/ID/EX/WB
+jr  		4		IF/ID/EX/WB
+jalr		4		IF/ID/EX/WB
+syscall		4		IF/ID/EX/WB
+---------------------------------------------
+

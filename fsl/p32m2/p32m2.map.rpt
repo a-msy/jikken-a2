@@ -1,0 +1,1021 @@
+Analysis & Synthesis report for p32m2
+Thu Jun  4 17:11:17 2020
+Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |p32m2|_stage_DUMP_REGS_state_reg
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for User Entity Instance: Top-level Entity: |p32m2
+ 14. Port Connectivity Checks: "p32DecodeUnit:decodeunit|add32:pc_add"
+ 15. Port Connectivity Checks: "p32DecodeUnit:decodeunit"
+ 16. Port Connectivity Checks: "p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0"
+ 17. Port Connectivity Checks: "p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0"
+ 18. Port Connectivity Checks: "p32ExecUnit:execunit|alu32:alu"
+ 19. Port Connectivity Checks: "add32:pc_add|add16:a1"
+ 20. Port Connectivity Checks: "add32:pc_add|add16:a0|add8:a1"
+ 21. Port Connectivity Checks: "add32:pc_add|add16:a0|add8:a0"
+ 22. Port Connectivity Checks: "add32:pc_add|add16:a0"
+ 23. Port Connectivity Checks: "add32:pc_add"
+ 24. Post-Synthesis Netlist Statistics for Top Partition
+ 25. Elapsed Time Per Partition
+ 26. Analysis & Synthesis Messages
+ 27. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2019  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Thu Jun  4 17:11:17 2020       ;
+; Quartus Prime Version              ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
+; Revision Name                      ; p32m2                                       ;
+; Top-level Entity Name              ; p32m2                                       ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 3,920                                       ;
+;     Total combinational functions  ; 3,864                                       ;
+;     Dedicated logic registers      ; 1,379                                       ;
+; Total registers                    ; 1379                                        ;
+; Total pins                         ; 178                                         ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Top-level entity name                                            ; p32m2              ; p32m2              ;
+; Family name                                                      ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 8           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 8           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.1%      ;
+;     Processor 3            ;   0.1%      ;
+;     Processor 4            ;   0.1%      ;
+;     Processor 5            ;   0.1%      ;
+;     Processor 6            ;   0.1%      ;
+;     Processor 7            ;   0.0%      ;
+;     Processor 8            ;   0.0%      ;
++----------------------------+-------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                ;
++----------------------------------+-----------------+------------------------------+---------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                            ; Library ;
++----------------------------------+-----------------+------------------------------+---------------------------------------------------------+---------+
+; p32m2.v                          ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v         ;         ;
+; add32.v                          ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v         ;         ;
+; regs32x32.v                      ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/regs32x32.v     ;         ;
+; regs32x8.v                       ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/regs32x8.v      ;         ;
+; p32ExecUnit.v                    ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v   ;         ;
+; alu32.v                          ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v         ;         ;
+; shift32.v                        ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v       ;         ;
+; p32DecodeUnit.v                  ; yes             ; Auto-Found Verilog HDL File  ; /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v ;         ;
++----------------------------------+-----------------+------------------------------+---------------------------------------------------------+---------+
+
+
++-------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                 ;
++---------------------------------------------+---------------+
+; Resource                                    ; Usage         ;
++---------------------------------------------+---------------+
+; Estimated Total logic elements              ; 3,920         ;
+;                                             ;               ;
+; Total combinational functions               ; 3864          ;
+; Logic element usage by number of LUT inputs ;               ;
+;     -- 4 input functions                    ; 2489          ;
+;     -- 3 input functions                    ; 466           ;
+;     -- <=2 input functions                  ; 909           ;
+;                                             ;               ;
+; Logic elements by mode                      ;               ;
+;     -- normal mode                          ; 3864          ;
+;     -- arithmetic mode                      ; 0             ;
+;                                             ;               ;
+; Total registers                             ; 1379          ;
+;     -- Dedicated logic registers            ; 1379          ;
+;     -- I/O registers                        ; 0             ;
+;                                             ;               ;
+; I/O pins                                    ; 178           ;
+;                                             ;               ;
+; Embedded Multiplier 9-bit elements          ; 0             ;
+;                                             ;               ;
+; Maximum fan-out node                        ; m_clock~input ;
+; Maximum fan-out                             ; 1379          ;
+; Total fan-out                               ; 19043         ;
+; Average fan-out                             ; 3.40          ;
++---------------------------------------------+---------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                     ;
++----------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------+---------------+--------------+
+; Compilation Hierarchy Node             ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                  ; Entity Name   ; Library Name ;
++----------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------+---------------+--------------+
+; |p32m2                                 ; 3864 (359)          ; 1379 (355)                ; 0           ; 0            ; 0       ; 0         ; 178  ; 0            ; |p32m2                                                                                               ; p32m2         ; work         ;
+;    |add32:pc_add|                      ; 30 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add                                                                                  ; add32         ; work         ;
+;       |add16:a0|                       ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0                                                                         ; add16         ; work         ;
+;          |add8:a0|                     ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0                                                                 ; add8          ; work         ;
+;             |add4:a0|                  ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a0                                                         ; add4          ; work         ;
+;                |add2:a1|               ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a0|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a0|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;             |add4:a1|                  ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a1                                                         ; add4          ; work         ;
+;                |add2:a0|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a0                                                 ; add2          ; work         ;
+;                   |fullAdder:a1|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a1                                    ; fullAdder     ; work         ;
+;                |add2:a1|               ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;          |add8:a1|                     ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1                                                                 ; add8          ; work         ;
+;             |add4:a0|                  ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a0                                                         ; add4          ; work         ;
+;                |add2:a0|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a0                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a0|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                |add2:a1|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a1|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;             |add4:a1|                  ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a1                                                         ; add4          ; work         ;
+;                |add2:a1|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a1|fullAdder:a0                                    ; fullAdder     ; work         ;
+;       |add16:a1|                       ; 20 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1                                                                         ; add16         ; work         ;
+;          |add8:a0|                     ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0                                                                 ; add8          ; work         ;
+;             |add4:a0|                  ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a0                                                         ; add4          ; work         ;
+;                |add2:a0|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a0                                                 ; add2          ; work         ;
+;                   |fullAdder:a1|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a0|fullAdder:a1                                    ; fullAdder     ; work         ;
+;                |add2:a1|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;             |add4:a1|                  ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1                                                         ; add4          ; work         ;
+;                |add2:a0|               ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a0                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a0|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a0|fullAdder:a1                                    ; fullAdder     ; work         ;
+;                |add2:a1|               ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;          |add8:a1|                     ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1                                                                 ; add8          ; work         ;
+;             |add4:a0|                  ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0                                                         ; add4          ; work         ;
+;                |add2:a0|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a0                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a0|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a0|fullAdder:a1                                    ; fullAdder     ; work         ;
+;                |add2:a1|               ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a1|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;             |add4:a1|                  ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1                                                         ; add4          ; work         ;
+;                |add2:a0|               ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a0                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a1                                    ; fullAdder     ; work         ;
+;                |add2:a1|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a1                                                 ; add2          ; work         ;
+;                   |fullAdder:a0|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a1|fullAdder:a0                                    ; fullAdder     ; work         ;
+;                   |fullAdder:a1|       ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a1|fullAdder:a1                                    ; fullAdder     ; work         ;
+;    |p32DecodeUnit:decodeunit|          ; 192 (151)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit                                                                      ; p32DecodeUnit ; work         ;
+;       |add32:pc_add|                   ; 41 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add                                                         ; add32         ; work         ;
+;          |add16:a0|                    ; 16 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0                                                ; add16         ; work         ;
+;             |add8:a0|                  ; 7 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0                                        ; add8          ; work         ;
+;                |add4:a0|               ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a0                                ; add4          ; work         ;
+;                   |add2:a1|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a0|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a1|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a0|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;                |add4:a1|               ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a1                                ; add4          ; work         ;
+;                   |add2:a0|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a1|    ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a0|add4:a1|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;             |add8:a1|                  ; 9 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1                                        ; add8          ; work         ;
+;                |add4:a0|               ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0                                ; add4          ; work         ;
+;                   |add2:a0|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a1|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a0|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;                |add4:a1|               ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1                                ; add4          ; work         ;
+;                   |add2:a0|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a1|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a0|add8:a1|add4:a1|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;          |add16:a1|                    ; 25 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1                                                ; add16         ; work         ;
+;             |add8:a0|                  ; 14 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0                                        ; add8          ; work         ;
+;                |add4:a0|               ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0                                ; add4          ; work         ;
+;                   |add2:a0|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;                |add4:a1|               ; 8 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1                                ; add4          ; work         ;
+;                   |add2:a0|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;             |add8:a1|                  ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1                                        ; add8          ; work         ;
+;                |add4:a0|               ; 8 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0                                ; add4          ; work         ;
+;                   |add2:a0|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a1|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a0|add2:a1|fullAdder:a1           ; fullAdder     ; work         ;
+;                |add4:a1|               ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a1                                ; add4          ; work         ;
+;                   |add2:a0|            ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a0                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a0           ; fullAdder     ; work         ;
+;                      |fullAdder:a1|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a1           ; fullAdder     ; work         ;
+;                   |add2:a1|            ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a1                        ; add2          ; work         ;
+;                      |fullAdder:a0|    ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32DecodeUnit:decodeunit|add32:pc_add|add16:a1|add8:a1|add4:a1|add2:a1|fullAdder:a0           ; fullAdder     ; work         ;
+;    |p32ExecUnit:execunit|              ; 794 (330)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit                                                                          ; p32ExecUnit   ; work         ;
+;       |alu32:alu|                      ; 261 (179)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu                                                                ; alu32         ; work         ;
+;          |add32:_op_add_a0|            ; 33 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0                                               ; add32         ; work         ;
+;             |add16:a0|                 ; 17 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0                                      ; add16         ; work         ;
+;                |add8:a0|               ; 8 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0                              ; add8          ; work         ;
+;                   |add4:a0|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a0|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a0|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a0|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                |add8:a1|               ; 9 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1                              ; add8          ; work         ;
+;                   |add4:a0|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a0|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a0|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a1|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a1|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a0|add8:a1|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;             |add16:a1|                 ; 16 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1                                      ; add16         ; work         ;
+;                |add8:a0|               ; 9 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0                              ; add8          ; work         ;
+;                   |add4:a0|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a0|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                |add8:a1|               ; 7 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1                              ; add8          ; work         ;
+;                   |add4:a0|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a0|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a0|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0|add16:a1|add8:a1|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;          |add32:_op_sub_a0|            ; 49 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0                                               ; add32         ; work         ;
+;             |add16:a0|                 ; 24 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0                                      ; add16         ; work         ;
+;                |add8:a0|               ; 13 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0                              ; add8          ; work         ;
+;                   |add4:a0|            ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a0|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a0|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a0|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 4 (4)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a1|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 5 (5)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a0|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                |add8:a1|               ; 11 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1                              ; add8          ; work         ;
+;                   |add4:a0|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a0|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a0|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 7 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a1|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 2 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a0|add8:a1|add4:a1|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;             |add16:a1|                 ; 25 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1                                      ; add16         ; work         ;
+;                |add8:a0|               ; 16 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0                              ; add8          ; work         ;
+;                   |add4:a0|            ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 4 (4)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a0|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 6 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a0|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;                |add8:a1|               ; 9 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1                              ; add8          ; work         ;
+;                   |add4:a0|            ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a0                      ; add4          ; work         ;
+;                      |add2:a0|         ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a0|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a0|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a0|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a0|add2:a1|fullAdder:a0 ; fullAdder     ; work         ;
+;                   |add4:a1|            ; 5 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a1                      ; add4          ; work         ;
+;                      |add2:a0|         ; 4 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a1|add2:a0              ; add2          ; work         ;
+;                         |fullAdder:a0| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a0 ; fullAdder     ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a1|add2:a0|fullAdder:a1 ; fullAdder     ; work         ;
+;                      |add2:a1|         ; 1 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a1|add2:a1              ; add2          ; work         ;
+;                         |fullAdder:a1| ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0|add16:a1|add8:a1|add4:a1|add2:a1|fullAdder:a1 ; fullAdder     ; work         ;
+;       |shift32:shift|                  ; 203 (203)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|p32ExecUnit:execunit|shift32:shift                                                            ; shift32       ; work         ;
+;    |regs32x32:regsfile|                ; 2489 (1401)         ; 1024 (0)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|regs32x32:regsfile                                                                            ; regs32x32     ; work         ;
+;       |regs32x8:reg0|                  ; 272 (272)           ; 256 (256)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|regs32x32:regsfile|regs32x8:reg0                                                              ; regs32x8      ; work         ;
+;       |regs32x8:reg1|                  ; 272 (272)           ; 256 (256)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|regs32x32:regsfile|regs32x8:reg1                                                              ; regs32x8      ; work         ;
+;       |regs32x8:reg2|                  ; 272 (272)           ; 256 (256)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|regs32x32:regsfile|regs32x8:reg2                                                              ; regs32x8      ; work         ;
+;       |regs32x8:reg3|                  ; 272 (272)           ; 256 (256)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |p32m2|regs32x32:regsfile|regs32x8:reg3                                                              ; regs32x8      ; work         ;
++----------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------+---------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |p32m2|_stage_DUMP_REGS_state_reg                                                                                                                                                                                                                                                                                                                                                                                                             ;
++-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+
+; Name                                                  ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st6 ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st1 ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st2 ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st3 ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st4 ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st5 ; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st0 ;
++-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st0 ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ;
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st5 ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 1                                                     ; 1                                                     ;
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st4 ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 1                                                     ; 0                                                     ; 1                                                     ;
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st3 ; 0                                                     ; 0                                                     ; 0                                                     ; 1                                                     ; 0                                                     ; 0                                                     ; 1                                                     ;
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st2 ; 0                                                     ; 0                                                     ; 1                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 1                                                     ;
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st1 ; 0                                                     ; 1                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 1                                                     ;
+; _stage_DUMP_REGS_state_reg._stage_DUMP_REGS_state_st6 ; 1                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 0                                                     ; 1                                                     ;
++-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+-------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; _stage_DUMP_REGS_n[0..2]              ; Stuck at GND due to stuck port data_in ;
+; _stage_DUMP_REGS_state_reg~4          ; Lost fanout                            ;
+; _stage_DUMP_REGS_state_reg~5          ; Lost fanout                            ;
+; _stage_DUMP_REGS_state_reg~6          ; Lost fanout                            ;
+; Total Number of Removed Registers = 6 ;                                        ;
++---------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 1379  ;
+; Number of registers using Synchronous Clear  ; 25    ;
+; Number of registers using Synchronous Load   ; 33    ;
+; Number of registers using Asynchronous Clear ; 1379  ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 1361  ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; _stage_IF_state_reg                    ; 3       ;
+; _stage_MEM_state_reg                   ; 4       ;
+; Total number of inverted registers = 2 ;         ;
++----------------------------------------+---------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg0[21] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg2[12] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg3[28] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg4[25] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg5[17] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg6[24] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg7[20] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg0[5]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg2[5]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg3[24] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg4[5]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg5[22] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg6[0]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg7[12] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg0[25] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg2[17] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg3[15] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg4[0]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg5[8]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg6[15] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg7[28] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg0[0]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg4[12] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg2[26] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg6[16] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg5[1]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg3[20] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg7[25] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg3|reg1[13] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg2|reg1[25] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg1|reg1[3]  ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |p32m2|regs32x32:regsfile|regs32x8:reg0|reg1[8]  ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |p32m2|_stage_MEM_mem_mdr[1]                     ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |p32m2|_stage_DUMP_REGS_n[4]                     ;
+; 3:1                ; 43 bits   ; 86 LEs        ; 43 LEs               ; 43 LEs                 ; Yes        ; |p32m2|_stage_WB_wb_in[0]                        ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |p32m2|_stage_MEM_mem_mdr[22]                    ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |p32m2|_stage_EX_ex_shamt[3]                     ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |p32m2|_stage_MEM_mem_mdr[11]                    ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |p32m2|_stage_MEM_store_loc[2]                   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |p32m2|_stage_WB_wb_load_data[13]                ;
+; 8:1                ; 16 bits   ; 80 LEs        ; 48 LEs               ; 32 LEs                 ; Yes        ; |p32m2|_stage_EX_ex_b[14]                        ;
+; 8:1                ; 32 bits   ; 160 LEs       ; 64 LEs               ; 96 LEs                 ; Yes        ; |p32m2|_stage_EX_ex_a[11]                        ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; Yes        ; |p32m2|pc[1]                                     ;
+; 11:1               ; 16 bits   ; 112 LEs       ; 64 LEs               ; 48 LEs                 ; Yes        ; |p32m2|_stage_EX_ex_b[28]                        ;
+; 11:1               ; 5 bits    ; 35 LEs        ; 15 LEs               ; 20 LEs                 ; Yes        ; |p32m2|_stage_EX_ex_dest[2]                      ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |p32m2|pc[28]                                    ;
+; 10:1               ; 26 bits   ; 156 LEs       ; 104 LEs              ; 52 LEs                 ; Yes        ; |p32m2|pc[25]                                    ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |p32m2|_stage_DUMP_REGS_state_reg                ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |p32m2|_regsfile_in[26]                          ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 15 LEs               ; 0 LEs                  ; No         ; |p32m2|_stage_DUMP_REGS_state_reg                ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |p32m2|_regsfile_in[5]                           ;
+; 6:1                ; 31 bits   ; 124 LEs       ; 124 LEs              ; 0 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|alu32:alu|out[14]    ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 5:1                ; 15 bits   ; 45 LEs        ; 30 LEs               ; 15 LEs                 ; No         ; |p32m2|p32ExecUnit:execunit|result[1]            ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; No         ; |p32m2|p32ExecUnit:execunit|result[27]           ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 8 LEs                ; 2 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 9:1                ; 2 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |p32m2|p32ExecUnit:execunit|result               ;
+; 9:1                ; 2 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |p32m2|_stage_DUMP_REGS_state_reg                ;
+; 43:1               ; 32 bits   ; 896 LEs       ; 672 LEs              ; 224 LEs                ; No         ; |p32m2|regs32x32:regsfile|a[4]                   ;
+; 43:1               ; 32 bits   ; 896 LEs       ; 672 LEs              ; 224 LEs                ; No         ; |p32m2|regs32x32:regsfile|b[28]                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
+
+
++-----------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |p32m2 ;
++----------------------------+-------+----------------------------------+
+; Parameter Name             ; Value ; Type                             ;
++----------------------------+-------+----------------------------------+
+; _stage_DUMP_REGS_state_st6 ; 0     ; Signed Integer                   ;
+; _stage_DUMP_REGS_state_st5 ; 1     ; Signed Integer                   ;
+; _stage_DUMP_REGS_state_st4 ; 2     ; Signed Integer                   ;
+; _stage_DUMP_REGS_state_st3 ; 3     ; Signed Integer                   ;
+; _stage_DUMP_REGS_state_st2 ; 4     ; Signed Integer                   ;
+; _stage_DUMP_REGS_state_st1 ; 5     ; Signed Integer                   ;
+; _stage_DUMP_REGS_state_st0 ; 6     ; Signed Integer                   ;
+; _stage_MEM_state_st1       ; 0     ; Signed Integer                   ;
+; _stage_MEM_state_st0       ; 1     ; Signed Integer                   ;
+; _stage_IF_state_st1        ; 0     ; Signed Integer                   ;
+; _stage_IF_state_st0        ; 1     ; Signed Integer                   ;
++----------------------------+-------+----------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "p32DecodeUnit:decodeunit|add32:pc_add"                                                 ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; b[1..0] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; cin     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; cout    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; ov      ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "p32DecodeUnit:decodeunit"                                                                ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port      ; Type   ; Severity ; Details                                                                             ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; epc_out   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; set_epc   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; cause_out ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; set_cause ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; funct_out ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "p32ExecUnit:execunit|alu32:alu|add32:_op_add_a0"                                    ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; cin  ; Input  ; Info     ; Stuck at GND                                                                        ;
+; cout ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "p32ExecUnit:execunit|alu32:alu|add32:_op_sub_a0"                                    ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; cin  ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; cout ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "p32ExecUnit:execunit|alu32:alu"                                                         ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; overflow ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; zero     ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "add32:pc_add|add16:a1"                                                              ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; ov   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "add32:pc_add|add16:a0|add8:a1"                                                      ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; ov   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "add32:pc_add|add16:a0|add8:a0"                                                      ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; ov   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "add32:pc_add|add16:a0"                                                              ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; ov   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "add32:pc_add"                                                                           ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; b[31..3] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; b[1..0]  ; Input  ; Info     ; Stuck at GND                                                                        ;
+; b[2]     ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; cin      ; Input  ; Info     ; Stuck at GND                                                                        ;
+; cout     ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; ov       ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 178                         ;
+; cycloneiii_ff         ; 1379                        ;
+;     CLR               ; 18                          ;
+;     ENA CLR           ; 1328                        ;
+;     ENA CLR SCLR SLD  ; 25                          ;
+;     ENA CLR SLD       ; 8                           ;
+; cycloneiii_lcell_comb ; 3866                        ;
+;     normal            ; 3866                        ;
+;         1 data inputs ; 3                           ;
+;         2 data inputs ; 908                         ;
+;         3 data inputs ; 466                         ;
+;         4 data inputs ; 2489                        ;
+;                       ;                             ;
+; Max LUT depth         ; 29.00                       ;
+; Average LUT depth     ; 13.38                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:13     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+    Info: Copyright (C) 2019  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Thu Jun  4 17:10:55 2020
+Info: Command: quartus_map --family="Cyclone IV E" p32m2
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
+Warning (12125): Using design file p32m2.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: p32m2 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 15
+Info (12127): Elaborating entity "p32m2" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(71): object "cause" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 71
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(73): object "epc" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 73
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(232): object "__net23" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 232
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(235): object "__net26" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 235
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(349): object "ADD" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 349
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(350): object "ADDI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 350
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(351): object "ADDIU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 351
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(352): object "ADDU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 352
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(354): object "AND" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 354
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(355): object "ANDI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 355
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(356): object "BEQ" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 356
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(357): object "BNE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 357
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(358): object "CAUSE_BP" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 358
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(359): object "CAUSE_DBE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 359
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(360): object "CAUSE_IBE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 360
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(361): object "CAUSE_INT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 361
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(362): object "CAUSE_OVF" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 362
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(363): object "CAUSE_RI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 363
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(364): object "CAUSE_SYS" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 364
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(365): object "DIV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 365
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(366): object "DIVU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 366
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(367): object "EXCEPTION_HANDLER" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 367
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(368): object "INITIAL_PC" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 368
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(369): object "J" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 369
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(370): object "JAL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 370
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(371): object "JALR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 371
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(372): object "JR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 372
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(373): object "LB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 373
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(374): object "LUI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 374
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(375): object "LW" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 375
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(376): object "MFHI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 376
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(377): object "MFLO" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 377
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(378): object "MULT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 378
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(379): object "MULTU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 379
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(380): object "NOR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 380
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(381): object "OR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 381
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(382): object "ORI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 382
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(384): object "SB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 384
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(387): object "SLL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 387
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(388): object "SLLV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 388
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(389): object "SLT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 389
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(390): object "SLTI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 390
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(391): object "SLTIU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 391
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(392): object "SLTU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 392
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(393): object "SPECIAL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 393
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(394): object "SRA" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 394
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(395): object "SRAV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 395
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(396): object "SRL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 396
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(397): object "SRLV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 397
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(398): object "SUB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 398
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(399): object "SUBU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 399
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(400): object "SW" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 400
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(401): object "SYSCALL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 401
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(402): object "XOR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 402
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(403): object "XORI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 403
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1066): object "_stage_DUMP_REGS_reg_r0" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1066
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1068): object "_stage_DUMP_REGS_reg_r1" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1068
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1070): object "_stage_DUMP_REGS_reg_r2" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1070
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1072): object "_stage_DUMP_REGS_reg_r3" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1072
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1074): object "_stage_DUMP_REGS_reg_r4" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1074
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1076): object "_stage_DUMP_REGS_reg_r5" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1076
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1078): object "_stage_DUMP_REGS_reg_r6" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1078
+Warning (10036): Verilog HDL or VHDL warning at p32m2.v(1080): object "_stage_DUMP_REGS_reg_r7" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1080
+Warning (10230): Verilog HDL assignment warning at p32m2.v(1450): truncated value with size 32 to match size of target (1) File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1450
+Warning (10230): Verilog HDL assignment warning at p32m2.v(1452): truncated value with size 32 to match size of target (1) File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1452
+Warning (10230): Verilog HDL assignment warning at p32m2.v(1454): truncated value with size 32 to match size of target (1) File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1454
+Warning (10230): Verilog HDL assignment warning at p32m2.v(1459): truncated value with size 32 to match size of target (1) File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1459
+Warning (10230): Verilog HDL assignment warning at p32m2.v(1461): truncated value with size 32 to match size of target (1) File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1461
+Warning (10230): Verilog HDL assignment warning at p32m2.v(1463): truncated value with size 32 to match size of target (1) File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 1463
+Warning (12125): Using design file add32.v, which is not specified as a design file for the current project, but contains definitions for 6 design units and 6 entities in project
+    Info (12023): Found entity 1: add4 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 15
+    Info (12023): Found entity 2: add2 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 110
+    Info (12023): Found entity 3: fullAdder File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 205
+    Info (12023): Found entity 4: add8 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 234
+    Info (12023): Found entity 5: add16 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 334
+    Info (12023): Found entity 6: add32 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 438
+Info (12128): Elaborating entity "add32" for hierarchy "add32:pc_add" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 96
+Info (12128): Elaborating entity "add16" for hierarchy "add32:pc_add|add16:a0" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 477
+Info (12128): Elaborating entity "add8" for hierarchy "add32:pc_add|add16:a0|add8:a0" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 373
+Info (12128): Elaborating entity "add4" for hierarchy "add32:pc_add|add16:a0|add8:a0|add4:a0" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 271
+Info (12128): Elaborating entity "add2" for hierarchy "add32:pc_add|add16:a0|add8:a0|add4:a0|add2:a0" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 50
+Info (12128): Elaborating entity "fullAdder" for hierarchy "add32:pc_add|add16:a0|add8:a0|add4:a0|add2:a0|fullAdder:a0" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/add32.v Line: 145
+Warning (12125): Using design file regs32x32.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: regs32x32 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/regs32x32.v Line: 15
+Info (12128): Elaborating entity "regs32x32" for hierarchy "regs32x32:regsfile" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 121
+Warning (12125): Using design file regs32x8.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: regs32x8 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/regs32x8.v Line: 15
+Info (12128): Elaborating entity "regs32x8" for hierarchy "regs32x32:regsfile|regs32x8:reg0" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/regs32x32.v Line: 66
+Warning (12125): Using design file p32ExecUnit.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: p32ExecUnit File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 15
+Info (12128): Elaborating entity "p32ExecUnit" for hierarchy "p32ExecUnit:execunit" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 146
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(97): object "__net18" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 97
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(104): object "__net24" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 104
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(147): object "ADD" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 147
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(148): object "ADDI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 148
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(149): object "ADDIU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 149
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(150): object "ADDU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 150
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(151): object "AND" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 151
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(152): object "ANDI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 152
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(153): object "BEQ" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 153
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(154): object "BNE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 154
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(155): object "DIV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 155
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(156): object "DIVU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 156
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(167): object "isDIVIDER" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 167
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(175): object "isMOVE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 175
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(177): object "isMULTIPLIER" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 177
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(195): object "J" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 195
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(196): object "JAL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 196
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(197): object "JALR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 197
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(198): object "JR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 198
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(199): object "LB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 199
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(200): object "LUI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 200
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(201): object "LW" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 201
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(202): object "MFHI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 202
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(203): object "MFLO" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 203
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(204): object "MULT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 204
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(205): object "MULTU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 205
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(206): object "NOR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 206
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(207): object "OR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 207
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(208): object "ORI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 208
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(209): object "SB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 209
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(210): object "SLL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 210
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(211): object "SLLV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 211
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(212): object "SLT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 212
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(213): object "SLTI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 213
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(214): object "SLTIU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 214
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(215): object "SLTU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 215
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(216): object "SPECIAL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 216
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(217): object "SRA" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 217
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(218): object "SRAV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 218
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(219): object "SRL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 219
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(220): object "SRLV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 220
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(221): object "SUB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 221
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(222): object "SUBU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 222
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(223): object "SW" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 223
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(224): object "SYSCALL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 224
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(225): object "XOR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 225
+Warning (10036): Verilog HDL or VHDL warning at p32ExecUnit.v(226): object "XORI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 226
+Warning (12125): Using design file alu32.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: alu32 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 15
+Info (12128): Elaborating entity "alu32" for hierarchy "p32ExecUnit:execunit|alu32:alu" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 68
+Warning (10036): Verilog HDL or VHDL warning at alu32.v(85): object "__net10" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 85
+Warning (10036): Verilog HDL or VHDL warning at alu32.v(86): object "__net11" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 86
+Warning (10036): Verilog HDL or VHDL warning at alu32.v(88): object "__net3" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 88
+Warning (10036): Verilog HDL or VHDL warning at alu32.v(92): object "__net7" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 92
+Warning (10036): Verilog HDL or VHDL warning at alu32.v(93): object "__net8" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 93
+Warning (10036): Verilog HDL or VHDL warning at alu32.v(94): object "__net9" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/alu32.v Line: 94
+Warning (12125): Using design file shift32.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: shift32 File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 15
+Info (12128): Elaborating entity "shift32" for hierarchy "p32ExecUnit:execunit|shift32:shift" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32ExecUnit.v Line: 85
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(34): object "__net0" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 34
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(35): object "__net1" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 35
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(40): object "__net2" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 40
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(41): object "__net3" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 41
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(42): object "__net4" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 42
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(43): object "__net5" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 43
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(44): object "__net6" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 44
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(45): object "__net7" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 45
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(46): object "__net8" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 46
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(47): object "__net9" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 47
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(60): object "_sll_s01_1_1009" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 60
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(61): object "_sll_s02_1_1010" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 61
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(62): object "_sll_s04_1_1011" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 62
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(63): object "_sll_s08_1_1012" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 63
+Warning (10036): Verilog HDL or VHDL warning at shift32.v(64): object "_sll_s16_1_1013" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/shift32.v Line: 64
+Warning (12125): Using design file p32DecodeUnit.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: p32DecodeUnit File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 15
+Info (12128): Elaborating entity "p32DecodeUnit" for hierarchy "p32DecodeUnit:decodeunit" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 191
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(94): object "__net2" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 94
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(128): object "_decode_isSHIFT_1_1023" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 128
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(142): object "ADD" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 142
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(143): object "ADDI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 143
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(144): object "ADDIU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 144
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(145): object "ADDU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 145
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(146): object "AND" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 146
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(147): object "ANDI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 147
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(148): object "BEQ" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 148
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(149): object "BNE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 149
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(150): object "CAUSE_BP" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 150
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(151): object "CAUSE_DBE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 151
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(152): object "CAUSE_IBE" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 152
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(153): object "CAUSE_INT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 153
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(154): object "CAUSE_OVF" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 154
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(155): object "CAUSE_RI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 155
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(156): object "CAUSE_SYS" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 156
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(157): object "DIV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 157
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(158): object "DIVU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 158
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(159): object "EXCEPTION_HANDLER" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 159
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(160): object "J" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 160
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(161): object "JAL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 161
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(162): object "JALR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 162
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(163): object "JR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 163
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(164): object "LB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 164
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(165): object "LUI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 165
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(166): object "LW" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 166
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(167): object "MFHI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 167
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(168): object "MFLO" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 168
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(169): object "MULT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 169
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(170): object "MULTU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 170
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(171): object "NOR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 171
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(172): object "OR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 172
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(173): object "ORI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 173
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(174): object "SB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 174
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(175): object "SLL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 175
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(176): object "SLLV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 176
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(177): object "SLT" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 177
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(178): object "SLTI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 178
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(179): object "SLTIU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 179
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(180): object "SLTU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 180
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(181): object "SPECIAL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 181
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(182): object "SRA" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 182
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(183): object "SRAV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 183
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(184): object "SRL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 184
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(185): object "SRLV" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 185
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(186): object "SUB" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 186
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(187): object "SUBU" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 187
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(188): object "SW" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 188
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(189): object "SYSCALL" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 189
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(190): object "XOR" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 190
+Warning (10036): Verilog HDL or VHDL warning at p32DecodeUnit.v(191): object "XORI" assigned a value but never read File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32DecodeUnit.v Line: 191
+Info (13000): Registers with preset signals will power-up high File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 408
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
+Info (144001): Generated suppressed messages file /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 1 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "write_done" File: /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.v Line: 46
+Info (21057): Implemented 4167 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 73 input pins
+    Info (21059): Implemented 105 output pins
+    Info (21061): Implemented 3989 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 200 warnings
+    Info: Peak virtual memory: 1106 megabytes
+    Info: Processing ended: Thu Jun  4 17:11:17 2020
+    Info: Elapsed time: 00:00:22
+    Info: Total CPU time (on all processors): 00:00:33
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in /nfs/home3/z9430509/jikken-a2/fsl/p32m2/p32m2.map.smsg.
+
+

@@ -1,0 +1,40 @@
+\begin{table}[tb]
+\caption{FPGAへの論理合成等で得られた諸量のまとめ}
+\label{tab:FPGAへの論理合成等で得られた諸量のまとめ}
+\begin{center}
+% 表が大きいので，small サイズのフォントを利用
+{\small
+\begin{tabular}{l|ccccc}
+\hline
+\hline
+\lw{モジュール} &
+\multicolumn{2}{c}{最大動作周波数 Fmax} & \lw{LE数 (使用率)} & 
+\lw{CF数 (使用率)} & \lw{レジスタ数 (使用率)}  \\
+& 85 $^\circ$C Model & 0 $^\circ$C Model & & &  \\
+\hline
+プロセッサ \verb|p16m1| & 12.34 & 23.45 & 
+    12,345 (2\%) & 1,111 (1\%)&  2,222 (2 \%) \\
+プロセッサ \verb|p16m2| & & & & & \\
+プロセッサ \verb|p16p1| & & & & & \\
+\hline
+\multicolumn{6}{r}{（Fmax の単位は MHz）}
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+\begin{table}[tb]
+\caption{ターゲットFPGAデバイスとそのリソース量}
+\label{tab:ターゲットFPGAデバイスとそのリソース量}
+\begin{center}
+\begin{tabular}{l|r}
+\hline \hline
+ターゲットデバイス & Intel Cyclone IV E (EP4CE115F29C7) \\
+Logic Element (LE)数 & 114,480 \\
+レジスタ数 & 114,480 \\
+メモリ容量 (ビット) & 4,981,312\\
+9ビット乗算器 & 432 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}

@@ -1,0 +1,47 @@
+/* (alu8.fsl) */
+module alu8 {
+  input         a: Bit(8)
+  input         b: Bit(8)
+  output      out: Bit(8)
+  output overflow: Bit(1)
+  output     zero: Bit(1)
+
+  val adder = new add8 // module instatiation
+
+  private def zero_check(): Unit = {
+    zero = if (out == 0x00) 0b1 else 0b0
+  }
+  def op_add(a, b): Unit = {
+    out = adder.add(a, b, 0b0).sum
+    overflow = ((~a(7) & ~b(7) &  out(7)) |
+                ( a(7) &  b(7) & ~out(7)))
+    zero_check()
+  }
+  def op_sub(a, b): Unit = {
+    out = adder.add(a, ~b, 0b1).sum
+    overflow = ((~a(7) &  b(7) &  out(7)) |
+                ( a(7) & ~b(7) & ~out(7)))
+    zero_check()
+  }
+  def op_and(a, b): Unit = {
+    out = a & b
+    overflow = 0b0
+    zero_check()
+  }
+  def op_or(a, b): Unit = {
+    out = a | b
+    overflow = 0b0
+    zero_check()
+  }
+  def op_xor(a, b): Unit = {
+    out = a ^ b
+    overflow = 0b0
+    zero_check()
+  }
+  def op_nor(a, b): Unit = {
+    out = ~(a | b)
+    overflow = 0b0
+    zero_check()
+  }
+} // module alu8
+/* End of file (alu8.fsl) */

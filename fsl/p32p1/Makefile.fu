@@ -1,0 +1,85 @@
+# 各種コマンド
+FSLC	 = fslc
+IVERILOG = iverilog
+VVP	 = vvp
+MAPS	 = maps
+
+# 合成時のトップモジュール
+TOP	= p32ForwardingUnit
+
+# フォワーディングユニット
+SRCS	= p32ForwardingUnit.fsl test_p32ForwardingUnit.fsl
+
+# テストベンチのターゲットモジュール
+TARGET	= test_$(TOP)
+
+# シミュレーション結果を保存するファイル
+TEMPFILES = $(TARGET).result
+
+
+# テストベクタ（入力信号パターン）
+TESTVECTOR = test_p32ForwardingUnit.pat
+
+# make だけのときは，-verilog オプション等なしコンパイル
+all:	compile
+
+# シミュレーションするとき make sim
+#sim:	test_p32p1.result
+sim:	simulation
+
+# .vvpファイルを生成するときは make vvp
+vvp:	$(TARGET).vvp
+
+# コンパイル（エラーチェックのみ）
+compile: $(SRCS)
+	$(FSLC) $^ 
+
+# Verilog HDLファイルをつくるときは，make v あるいは make verilog
+v:	verilog
+verilog: $(SRCS:.fsl=.v)
+
+# Verilog HDL ファイルの生成（コンパイル）
+$(SRCS:.fsl=.v): $(SRCS)
+	$(FSLC) $^ -verilog -target $(TARGET)
+
+# .vvp ファイル（シミュレーションスクリプト）の生成
+$(TARGET).vvp: $(SRCS:.fsl=.v)
+	$(IVERILOG) -o $@ $^
+
+# テストベクタの生成
+tv:	$(TESTVECTOR)
+
+$(TESTVECTOR):
+	scala Genpat.scala > $@
+
+# .vvpファイルを実行（シミュレーション）して，結果をファイルに保存
+#test_p32p1.result: $(TARGET).vvp
+simulation: $(TARGET).vvp
+	@if [ ! -f $(TESTVECTOR) ]; then \
+		echo "---------"; \
+		echo "INFO: You MUST generate a testvector file"; \
+		echo "INFO: Type: 'make tv' before simulation"; \
+		exit -1; \
+	fi
+	$(VVP) $(TARGET).vvp | tee $(TARGET).result
+	@echo "result file '$(TARGET).result' generated"
+
+# シミュレーション結果と比較用パターンとの差分をとる
+diff: $(TARGET).result $(TARGET).result.sample
+	diff $(TARGET).result $(TARGET).result.sample || exit $$(($$? - 1))
+
+
+# clean
+clean:
+	rm -f *~ $(TEMPFILES) 
+	rm -f $(SRCS:.fsl=.v)
+	rm -f *.vcd
+
+distclean: clean
+	rm -f $(TARGET).vvp $(TESTVECTOR)
+
+pull:
+	git pull
+
+# End of file (Makefile.fu)
+

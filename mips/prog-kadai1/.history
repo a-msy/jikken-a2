@@ -1,0 +1,32 @@
+run
+print 0x10004000
+quit
+step 10
+print_all_regs
+quit
+run
+print 0x10004100
+print 0x10004000
+quit
+run
+print 0x10004000
+quit
+run
+0x10004000
+print 0x10004000
+print 0x10004100
+quit
+run
+print 0x10004000
+exit
+run
+q
+e
+end
+q
+run
+print 0x10004000
+run
+prin
+run
+print 0x10004000

@@ -1,0 +1,33 @@
+/* (test_shift32.fsl) */
+
+module test_shift32 extends Simulator {
+  val s0 = new shift32
+  reg count: Bit(12)
+  mem [Bit(40)] pat(128)
+  initial {
+    _readmemb("test_shift32.pat", pat)
+  }
+  always {
+    count := count + 1
+    //
+    if (2 <= count && count <= 129) par {
+      val i = count - 2
+      val p = pat(i)
+      val    in = p(39, 8) // 32-bit
+      val shamt = p(7, 3)  //  5-bit
+      val   fun = p(2, 0)  //  3-bit
+
+      fun match {
+	case 0b100 => s0.sll(in, shamt)
+	case 0b010 => s0.srl(in, shamt)
+	case 0b001 => s0.sra(in, shamt)
+      }
+      val out = s0.out
+      _display("%d %x %2d %b - %8x",
+	       i, in, shamt, fun, out)
+    }
+    if (count == 129) _finish("bye")
+  }
+}
+
+/* End of file (test_shift32.fsl) */
